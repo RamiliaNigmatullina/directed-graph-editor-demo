@@ -91,10 +91,34 @@ function removeNode(testQuestionId) {
   removedNode = nodes.find( function(node) { return node.testQuestionId == testQuestionId } );
   nodes.splice(nodes.indexOf(removedNode), 1);
 
-  // nodes = getNodes();
-  links = getLinks();
+  var associatedLinks = searchAssociatedLinks(removedNode["id"]);
+  removeAssociatedLinks(associatedLinks);
+
+  // NEW: Doesn't work.
+  // links = getLinks();
 
   restart();
+}
+
+function searchAssociatedLinks(id) {
+  var associatedLinks = []
+
+  for (var i = 0; i < links.length; i++) {
+    if (links[i].source["id"] === id || links[i].target["id"] === id) {
+      associatedLinks.push(links[i]);
+    }
+  }
+
+  return associatedLinks;
+}
+
+function removeAssociatedLinks(associatedLinks) {
+  for (var i = 0; i < associatedLinks.length; i++) {
+    var index = links.indexOf(associatedLinks[i]);
+    if (index > -1) {
+      links.splice(index, 1);
+    }
+  }
 }
 
 function getRandomInt(min = 0, max = 500) {
@@ -141,9 +165,6 @@ function getLinks() {
   // xhr.send();
   //
   // var links = JSON.parse(xhr.response);
-
-  // NEW: Hardcode. Can't receive response from server.
-  var links = [];
 
   var links_arr = [];
 
@@ -320,8 +341,6 @@ function restart() {
         .classed('hidden', false)
         .attr('d', 'M' + mousedown_node.x + ',' + mousedown_node.y + 'L' + mousedown_node.x + ',' + mousedown_node.y);
 
-
-
       restart();
     })
     .on('mouseup', function(d) {
@@ -367,18 +386,18 @@ function restart() {
 
       var testId = document.getElementsByClassName("js-test-form")[0].dataset["id"];
 
-      var xhr = new XMLHttpRequest();
-
-      var body =
-        'way[test_id]=' + testId +
-        '&current_question_id=' + source.id +
-        '&next_question_id=' + target.id;
-
-      xhr.open("POST", '/admin/ways.json', true);
-      xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-
-      xhr.send(body);
-
+      // NEW: It doesn't work. Can't send response to server.
+      // var xhr = new XMLHttpRequest();
+      //
+      // var body =
+      //   'way[test_id]=' + testId +
+      //   '&current_question_id=' + source.id +
+      //   '&next_question_id=' + target.id;
+      //
+      // xhr.open("POST", '/admin/ways.json', true);
+      // xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+      //
+      // xhr.send(body);
 
       // select new link
       selected_link = link;
