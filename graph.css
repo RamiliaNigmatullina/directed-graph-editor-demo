@@ -1,3 +1,7 @@
+.hidden {
+  display: none;
+}
+
 svg {
   background-color: #FFF;
   cursor: default;

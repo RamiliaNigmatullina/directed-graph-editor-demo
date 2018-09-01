@@ -1,7 +1,7 @@
 // set up SVG for D3
-const width = 960;
-const height = 500;
-const colors = d3.scaleOrdinal(d3.schemeCategory10);
+var width  = 960,
+    height = 600,
+    colors = d3.scale.category10();
 
 var svg = d3.select('body')
   .append('svg')
@@ -19,20 +19,26 @@ function addToScenario(event) {
 
   var testQuestionId = event.target.dataset["id"];
 
-  var xhr = new XMLHttpRequest();
+  // NEW: It doesn't work
+  // var xhr = new XMLHttpRequest();
 
-  var body = 'test_question[in_scenario]=1';
+  // var body = 'test_question[in_scenario]=1';
 
-  xhr.open("PATCH", "/admin/test_questions/" + testQuestionId + ".json", false);
-  xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+  // xhr.open("PATCH", "/admin/test_questions/" + testQuestionId + ".json", false);
+  // xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+  //
+  // xhr.send(body);
 
-  xhr.send(body);
+  // var resp = JSON.parse(xhr.response);
 
-  var resp = JSON.parse(xhr.response);
+  // var nodeId = resp.question_id,
+  //   nodeIndex = resp.question_index,
+  //   testQuestionId = resp.id
 
-  var nodeId = resp.question_id,
-    nodeIndex = resp.question_index,
-    testQuestionId = resp.id
+  // NEW: Hardcode. Can't receive response from server
+  var nodeId = testQuestionId,
+    nodeIndex = testQuestionId,
+    testQuestionId = testQuestionId
 
   if (!nodeId || !nodeId) return;
 
@@ -48,14 +54,14 @@ function removeFromScenario(event) {
 
   var testQuestionId = event.target.dataset["id"];
 
-  var xhr = new XMLHttpRequest();
-
-  var body = 'test_question[in_scenario]=0';
-
-  xhr.open("PATCH", "/admin/test_questions/" + testQuestionId + ".json", false);
-  xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-
-  xhr.send(body);
+  // var xhr = new XMLHttpRequest();
+  //
+  // var body = 'test_question[in_scenario]=0';
+  //
+  // xhr.open("PATCH", "/admin/test_questions/" + testQuestionId + ".json", false);
+  // xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+  //
+  // xhr.send(body);
 
   var addToScenarioLink = event.target.parentElement.previousElementSibling;
   addToScenarioLink.classList.remove("hidden");
@@ -105,11 +111,6 @@ function getNodes() {
   xhr.open("get", path, false);
   xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 
-  window.path = path
-  window.xhr = new XMLHttpRequest();
-
-  console.log(xhr);
-
   xhr.send();
 
   var nodes = JSON.parse(xhr.response);
@@ -133,12 +134,16 @@ function getLinks() {
 
   var path = "/admin/ways.json?way[test_id]=" + testId;
 
-  xhr.open("get", path, false);
-  xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+  // NEW: Can't send request to server
+  // xhr.open("get", path, false);
+  // xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+  //
+  // xhr.send();
+  //
+  // var links = JSON.parse(xhr.response);
 
-  xhr.send();
-
-  var links = JSON.parse(xhr.response);
+  // NEW: Hardcode. Can't receive response from server.
+  var links = [];
 
   var links_arr = [];
 
@@ -156,14 +161,12 @@ function getLinks() {
   return links_arr;
 }
 
-// It works if server exists
+// NEW: It doesn't work without server
 // var nodes = getNodes();
 // var links = getLinks();
 
 var nodes = [];
 var links = [];
-
-// console.log(d3.layout)
 
 // init D3 force layout
 var force = d3.layout.force()
@@ -349,8 +352,6 @@ function restart() {
         direction = 'left';
       }
 
-
-
       var link;
       link = links.filter(function(l) {
         return (l.source === source && l.target === target);
@@ -528,5 +529,5 @@ d3.select(
 
 restart();
 
-d3.select(document.getElementsByClassName("test-scenario-graph")[0])
-d3.select(document.getElementsByClassName("add-to-scenario").addEventListener("click", addToScenario))
+// d3.select(document.getElementsByClassName("test-scenario-graph")[0])
+// d3.select(document.getElementsByClassName("add-to-scenario").addEventListener("click", addToScenario))

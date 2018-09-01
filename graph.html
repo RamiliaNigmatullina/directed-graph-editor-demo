@@ -7,19 +7,56 @@
   </head>
 
   <body>
-    <h2>Graph</h2>
+    <h2>Graph Demo</h2>
+
     <div class="js-test-form" data-id="1"></div>
-    <div class="add-to-scenario">
-      <a href="#" data-id="2">Add to scenario</a>
-    </div>
-    <div class="remove-from-scenario">
-      <a href="#" data-id="3">Remove from scenario</a>
-    </div>
+    <h3>Questions</h3>
+    <ul>
+      <div class="js-test-question" data-id="1">
+        <li>
+          <div>
+            Question #1
+          </div>
+          <div class="add-to-scenario">
+            <a href="#" data-id="1">Add to scenario</a>
+          </div>
+          <div class="remove-from-scenario hidden">
+            <a href="#" data-id="1">Remove from scenario</a>
+          </div>
+        </li>
+      </div>
+      <div class="js-test-question" data-id="2">
+        <li>
+          <div>
+            Question #2
+          </div>
+          <div class="add-to-scenario">
+            <a href="#" data-id="2">Add to scenario</a>
+          </div>
+          <div class="remove-from-scenario hidden">
+            <a href="#" data-id="2">Remove from scenario</a>
+          </div>
+        </li>
+      </div>
+      <div class="js-test-question" data-id="3">
+        <li>
+          <div>
+            Question #3
+          </div>
+          <div class="add-to-scenario">
+            <a href="#" data-id="3">Add to scenario</a>
+          </div>
+          <div class="remove-from-scenario hidden">
+            <a href="#" data-id="3">Remove from scenario</a>
+          </div>
+        </li>
+      </div>
+    </ul>
 
     <div class="test-scenario-graph"></div>
   </body>
 
-  <script src="http://d3js.org/d3.v5.min.js"></script>
-  <!-- <script src="d3.v3.min.js"></script> -->
+  <!-- <script src="http://d3js.org/d3.v3.min.js"></script> -->
+  <script src="d3.v3.min.js"></script>
   <script src="my_graph.js"></script>
 </html>
