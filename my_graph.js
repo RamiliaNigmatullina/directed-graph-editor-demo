@@ -297,7 +297,6 @@ function restart() {
   // remove old links
   path.exit().remove();
 
-
   // circle (node) group
   // NB: the function arg is crucial here! nodes are known by id, not by index!
   circle = circle.data(nodes, function(d) { return d.index; });
@@ -547,6 +546,3 @@ d3.select(
 );
 
 restart();
-
-// d3.select(document.getElementsByClassName("test-scenario-graph")[0])
-// d3.select(document.getElementsByClassName("add-to-scenario").addEventListener("click", addToScenario))
